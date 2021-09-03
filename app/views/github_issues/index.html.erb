@@ -1,0 +1,50 @@
+<%= render 'shared/notice'%>
+<div class="widget-header bordered no-actions d-flex align-items-center">
+  <h4>Github Issues</h4>
+</div>
+<div class="widget-body">
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Number</th>
+          <th>Track</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Assignees</th>
+          <th>Label</th>
+          <th>Milestone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @github_issues.each do |github_issue| %>
+          <tr>
+            <td><%= github_issue.id %></td>
+            <td><span class="text-primary"><%= github_issue.number %></span></td>
+            <td><span class="text-primary"><%= display_boolean(github_issue.track, 'Tracked', 'Untracked').html_safe %></span></td>
+            <td><span class="text-primary"><%= github_issue.name %></span></td>
+            <td><span class="text-primary"><%= github_issue.status %></span></td>
+            <td><span class="text-primary"><%= github_issue.assignees %></span></td>
+            <td><span class="text-primary"><%= github_issue.label %></span></td>
+            <td><span class="text-primary"><%= github_issue.milestone %></span></td>
+            <td class="td-actions">
+              <a href="<%= github_issue_path(github_issue) %>"><i class="la ion-eye show" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Show" ></i></a>
+              <a href="<%= edit_github_issue_path(github_issue) %>"><i class="la la-edit edit" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Edit" ></i></a>
+              <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="<%= github_issue_path(github_issue) %>"><i class="la ion-trash-a destroy" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Delete" ></i></a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="dataTables_paginate">
+      <%= paginate @github_issues, theme: 'twitter-bootstrap-4'%>
+    </div>
+  </div>
+</div>
+<div class="btn-new">
+  <a href="<%= new_github_issue_path %>" class="btn btn-primary mr-1 mb-2"  >
+    <span class="fd-btn">New Github Issue</span>
+  </a>
+</div>

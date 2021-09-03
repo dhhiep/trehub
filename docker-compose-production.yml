@@ -1,0 +1,23 @@
+---
+# Usage:
+# docker-compose --file docker-compose-production.yml build
+# docker-compose --file docker-compose-production.yml down; docker-compose --file docker-compose-production.yml up --build --detach
+# docker-compose --file docker-compose-production.yml down; docker rmi -f core_base_app; docker rmi $(docker images --filter "dangling=true" -q --no-trunc) -f; docker-compose --file docker-compose-production.yml up --build --detach
+
+version: '3.8'
+
+services:
+  app:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./docker/production/Dockerfile
+      args:
+        BUNDLER_VERSION: $BUNDLER_VERSION
+        WORKSPACE: $WORKSPACE
+        RAILS_PORT: $RAILS_PORT
+    ports:
+      - 3000:3000
+    volumes:
+      - ./log:/var/workspace/log
+      - ./storage:/var/workspace/storage

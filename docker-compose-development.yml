@@ -1,0 +1,42 @@
+---
+# Usage:
+# touch $HOME/.zsh_core_base_development_app_history_docker
+# docker-compose --file docker-compose-development.yml build
+# docker-compose --file docker-compose-development.yml down; docker-compose --file docker-compose-development.yml up --build --detach
+# docker-compose --file docker-compose-development.yml down; docker rmi -f core_base_development_app; docker rmi $(docker images --filter "dangling=true" -q --no-trunc) -f; docker-compose --file docker-compose-development.yml up --build --detach
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - ~/docker/postgres130/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=F00derIOS3cr3tP@ssw0rd
+
+  development_app:
+    depends_on:
+      - db
+    build:
+      context: ./
+      dockerfile: ./docker/development/Dockerfile
+      args:
+        RUBY_VERSION: $RUBY_VERSION
+        BUNDLER_VERSION: $BUNDLER_VERSION
+        NVM_VERSION: $NVM_VERSION
+        NODE_VERSION: $NODE_VERSION
+        YARN_VERSION: $YARN_VERSION
+        REDIS_VERSION: $REDIS_VERSION
+        WORKSPACE: $WORKSPACE
+        RAILS_PORT: $RAILS_PORT
+    environment:
+      - POSTGRESQL_HOST=db
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/var/workspace
+      - ~/.zsh_core_base_development_app_history_docker:/root/.zsh_history
+    tty: true

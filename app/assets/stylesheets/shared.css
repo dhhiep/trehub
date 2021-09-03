@@ -1,0 +1,49 @@
+.btn-new {
+  padding: 1.4rem 1.4rem 1.4rem 0rem;
+  float: left;
+}
+
+.table .td-actions a i.show:hover {
+  background: #10da32;
+  color: #fff;
+}
+
+.table .td-actions a i.edit:hover {
+  background: #db1bc2;
+  color: #fff;
+}
+
+.table .td-actions a i.destroy:hover {
+  background: #e76c6c;
+  color: #fff;
+}
+
+.table .td-actions a i.view:hover {
+  background: #000FFF;
+  color: #fff;
+}
+
+.tittle-name {
+  color: #5d5386;
+  font-weight: 600;
+}
+
+.last {
+  font-weight: 600;
+}
+
+div.dataTables_paginate ul.pagination {
+  justify-content: flex-end;
+}
+
+.table td {
+  padding: .35rem;
+}
+
+.fd-btn {
+  color: aliceblue;
+}
+
+.widget-header h4 {
+  margin-right: auto !important;
+}

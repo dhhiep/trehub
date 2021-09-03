@@ -1,0 +1,47 @@
+<!-- Begin Header -->
+<header class="header">
+    <nav class="navbar fixed-top">
+        <!-- Begin Search Box-->
+        <div class="search-box">
+            <button class="dismiss"><i class="ion-close-round"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search something ..." class="form-control">
+            </form>
+        </div>
+        <!-- End Search Box-->
+        <!-- Begin Topbar -->
+        <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
+            <!-- Begin Logo -->
+            <div class="navbar-header">
+                <span class = "btn-click" data-url="<%= root_path %>">
+                    <span  class="navbar-brand" >
+                        <div class="brand-image brand-big">
+                            <%= image_tag "logo-big.png", alt: "logo", class: "logo-big"%>
+                        </div>
+                        <div class="brand-image brand-small">
+                            <%= image_tag "logo.png", alt: "logo", class: "logo-small"%>
+                        </div>
+                    </span>
+                </span>
+                <!-- Toggle Button -->
+                <a id="toggle-btn" href="#" class="menu-btn active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+                <!-- End Toggle -->
+            </div>
+            <!-- End Logo -->
+            <!-- Begin Navbar Menu -->
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
+                <!-- Sign out -->
+                <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+                <!-- End Sign out -->
+            </ul>
+            <!-- End Navbar Menu -->
+
+        </div>
+        <!-- End Topbar -->
+    </nav>
+</header>
+<!-- End Header -->
