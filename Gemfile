@@ -54,6 +54,9 @@ gem 'devise', '~> 4.8'
 # HTML Abstraction Markup Language - A Markup Haiku
 gem 'haml', '~> 5.2'
 
+# Ruby toolkit for the GitHub API
+gem 'octokit', '~> 4.21'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
