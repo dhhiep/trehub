@@ -1,0 +1,44 @@
+.widget-header.bordered.no-actions.d-flex.align-items-center
+  %h4= page_name
+= form_with(model: [@github_issue], local: true) do |form|
+  - if github_issue.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(github_issue.errors.count, "error")
+        prohibited this github_issue from being saved:
+      %ul
+        - github_issue.errors.full_messages.each do |message|
+          %li= message
+  .widget-body
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :name, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :name, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :number, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :number, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :status, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :status, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :assignees, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :assignees, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :label, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :label, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :milestone, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        = form.text_field :milestone, class: 'form-control'
+    .form-group.row.d-flex.align-items-center.mb-5
+      = form.label :track, class: 'col-lg-3 form-control-label'
+      .col-lg-9
+        .styled-checkbox
+          = form.check_box :track, id: :track
+          %label{:for => "track"}
+  .actions.btn-new
+    = form.submit class: 'btn btn-primary mr-1 mb-2'

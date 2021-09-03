@@ -1,0 +1,29 @@
+= render 'shared/notice'
+.widget-body
+  %p
+    %span.tittle-name Number:
+    = @github_issue.number
+  %p
+    %span.tittle-name Track:
+    = display_boolean(@github_issue.track, 'Tracked', 'Untracked').html_safe
+  %p
+    %span.tittle-name Name:
+    = @github_issue.name
+  %p
+    %span.tittle-name Status:
+    = @github_issue.status
+  %p
+    %span.tittle-name Assignees:
+    = @github_issue.assignees
+  %p
+    %span.tittle-name Label:
+    = @github_issue.label
+  %p
+    %span.tittle-name Milestone:
+    = @github_issue.milestone
+.btn-new
+  %a.btn.btn-primary.mr-1.mb-2{:href => edit_github_issue_path(@github_issue)}
+    %span.fd-btn Edit
+.btn-new
+  %a.btn.btn-primary.mr-1.mb-2{:href => github_issues_path}
+    %span.fd-btn Back

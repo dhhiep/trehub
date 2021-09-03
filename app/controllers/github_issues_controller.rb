@@ -4,7 +4,7 @@ class GithubIssuesController < BaseController
   before_action :find_github_issue, only: %i[show edit update destroy]
 
   def index
-    @github_issues = GithubIssue.all.page(params[:page])
+    @github_issues = GithubIssue.all.order(number: :desc).page(params[:page])
   end
 
   def show; end

@@ -1,0 +1,35 @@
+/ Begin Header
+%header.header
+  %nav.navbar.fixed-top
+    / Begin Search Box
+    .search-box
+      %button.dismiss
+        %i.ion-close-round
+      %form#searchForm{:action => "#", :role => "search"}
+        %input.form-control{:placeholder => "Search something ...", :type => "search"}/
+    / End Search Box
+    / Begin Topbar
+    .navbar-holder.d-flex.align-items-center.align-middle.justify-content-between
+      / Begin Logo
+      .navbar-header
+        %span.btn-click{"data-url" => root_path}
+          %span.navbar-brand
+            .brand-image.brand-big
+              = image_tag "logo-big.png", alt: "logo", class: "logo-big"
+            .brand-image.brand-small
+              = image_tag "logo.png", alt: "logo", class: "logo-small"
+        / Toggle Button
+        %a#toggle-btn.menu-btn.active{:href => "#"}
+          %span
+          %span
+          %span
+        / End Toggle
+      / End Logo
+      / Begin Navbar Menu
+      %ul.nav-menu.list-unstyled.d-flex.flex-md-row.align-items-md-center.pull-right
+        / Sign out
+        = link_to 'Sign out', destroy_user_session_path, :method => :delete
+        / End Sign out
+      / End Navbar Menu
+    / End Topbar
+/ End Header

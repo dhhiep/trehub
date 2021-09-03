@@ -1,0 +1,48 @@
+.row.flex-row
+  .col-xl-12
+    .widget.widget-07
+      .widget-header.bordered.d-flex.align-items-center
+        %h2 Github Issues
+        .widget-options
+          .btn-group{:role => "group"}
+            = link_to 'Add Github Issue', new_github_issue_path, class: 'btn btn-success ripple'
+      .widget-body.bordered
+        .table-responsive.bordered
+          %table.table.mb-0
+            %thead
+              %tr
+                %th Number
+                %th Track
+                %th Name
+                %th Status
+                %th Assignees
+                %th Label
+                %th Milestone
+                %th Actions
+            %tbody
+              - @github_issues.each do |github_issue|
+                %tr
+                  %td
+                    %span.text-primary= github_issue.number
+                  %td
+                    %span.text-primary= display_boolean(github_issue.track, 'Tracked', 'Untracked').html_safe
+                  %td
+                    %span.text-primary= github_issue.name
+                  %td
+                    %span.text-primary= github_issue.status
+                  %td
+                    %span.text-primary= github_issue.assignees
+                  %td
+                    %span.text-primary= github_issue.label
+                  %td
+                    %span.text-primary= github_issue.milestone
+                  %td.td-actions
+                    %a{:href => github_issue_path(github_issue)}
+                      %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                    %a{:href => edit_github_issue_path(github_issue)}
+                      %i.la.la-edit.edit{"data-content" => "Edit", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                    %a{"data-confirm" => "Are you sure?", "data-method" => "delete", :href => github_issue_path(github_issue), :rel => "nofollow"}
+                      %i.la.ion-trash-a.destroy{"data-content" => "Delete", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+        %br/
+        .dataTables_paginate
+          = paginate @github_issues, theme: 'twitter-bootstrap-4'
