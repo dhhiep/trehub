@@ -36,7 +36,7 @@ module Github
             status: issue[:state],
             assignees: assignees(issue),
             labels: labels(issue),
-            milestone: milestone(issue),
+            milestone: issue.to_h.dig(:milestone, :due_on),
           }
 
           accumulator.merge(issue[:number] => issue_data)
@@ -59,13 +59,6 @@ module Github
             color: label[:color],
           }
         end
-      end
-
-      def milestone(issue)
-        due_on = issue.dig(:milestone, :due_on)
-        return due_on if due_on.blank?
-
-        Time.parse(due_on)
       end
     end
   end

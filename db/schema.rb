@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_084042) do
+ActiveRecord::Schema.define(version: 2021_09_04_102855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2021_09_04_084042) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "project_column"
     t.string "project_name"
+    t.boolean "verified", default: false
+    t.index ["number"], name: "index_github_issues_on_number", unique: true
   end
 
   create_table "users", force: :cascade do |t|

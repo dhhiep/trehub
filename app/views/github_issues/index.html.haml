@@ -23,19 +23,19 @@
               - @github_issues.each do |github_issue|
                 %tr
                   %td
-                    %span.text-primary= github_issue.number
+                    = link_to github_issue.number, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                   %td
                     %span.text-primary= display_boolean(github_issue.track, 'Tracked', 'Untracked').html_safe
                   %td
-                    %span.text-primary= github_issue.name
+                    = link_to github_issue.name, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                   %td
-                    %span.text-primary= github_issue.status
+                    %span.text-primary= github_issue.project_column
                   %td
                     %span.text-primary= github_issue.assignees
                   %td
                     %span.text-primary= github_issue.label
                   %td
-                    %span.text-primary= github_issue.milestone
+                    %span.text-primary= github_issue.milestone || 'BACKLOG'
                   %td.td-actions
                     %a{:href => github_issue_path(github_issue)}
                       %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
