@@ -1,54 +1,33 @@
 # TreHub
+TreHub is a tool to sync between Github issues and Trello cards
 
-## Project setup
+## Setup project
 
-### Update GithubIssue after generated
-
-    1. Update fields for migration
-
-    ```
-    db/migrate/20210825105550_create_github_issues.rb
-    ```
-
-    2. Update fields permitted (line 51)
-
-    ```
-    app/controllers/github_issues_controller.rb
-    ```
-
-    3. Update fields for serializer (line 6)
-
-    ```
-    app/serializers/api/v1/github_issue_serializer.rb
-    ```
-
-    4. Update fields for admin form
-
-    ```
-    app/views/github_issues/_form.html.erb
-    ```
-
-### Setup ENV Variables
+##### 1. Setup ENV variables
 
 ```bash
 cp .env.template .env
 ```
 
-### Make commands
+##### 2. Get github `Personal access tokens` key at [https://github.com/settings/tokens](https://github.com/settings/tokens)
 
-```bash
-make help
+Scopes:
+```
+repo
+read:org
 ```
 
-### Development environment
+## Environment
 
-#### Running our application in a container
+### I. Development environment (Docker)
 
+##### 1. Store container zsh history to host and initialize container
 ```bash
-touch $HOME/.zsh_core_base_development_app_history_docker; make up
+touch $HOME/.zsh_trehub_development_app_history_docker
+make up
 ```
 
-#### Execute a command in our container
+##### 2. Execute a command in our container
 
 ```bash
 make exec
@@ -62,47 +41,47 @@ bundle exec rake db:seed
 bundle exec rails server --port=3000 --binding=0.0.0.0
 ```
 
-#### Stop our container
+##### 3. Stop our container
 
 ```bash
 make stop
 ```
 
-#### Start our container
+##### 4. Start our container
 
 ```bash
 make start
 ```
 
-#### Stop and remove container
+#### 5. Stop and remove container
 
 ```bash
 make down
 ```
 
-### Production environment
+### 2. Production environment
 
-#### Running our application in a container
+##### 1 Running our application in a container
 
 ```bash
 make up FILE=docker-compose-production.yml
 ```
 
-#### Stop and remove container
+##### 2. Stop and remove container
 
 ```bash
 make down FILE=docker-compose-production.yml
 ```
 
-### Build an image
+##### 3. Build an image
 
 ```bash
-make build_production_image TAG=core_base
-make run_production_container NAME=core_base TAG=core_base:latest
-make rm_production_container NAME=core_base
+make build_production_image TAG=trehub
+make run_production_container NAME=trehub TAG=trehub:latest
+make rm_production_container NAME=trehub
 ```
 
-#### Clean up dangling Docker images
+##### 4. Clean up dangling Docker images
 
 ```bash
 make clean
