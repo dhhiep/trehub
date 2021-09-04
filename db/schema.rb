@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_09_04_084042) do
   create_table "github_issues", force: :cascade do |t|
     t.string "name"
     t.integer "number"
-    t.string "status", default: "todo"
+    t.string "status"
     t.string "assignees"
     t.string "label"
     t.datetime "milestone"
