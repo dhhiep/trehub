@@ -5,9 +5,17 @@ class GithubIssue < ApplicationRecord
 
   before_create :update_track_flag
 
+  PROJECT_STATUSES = {
+    in_progress: ['Fixed, need Build/Deploy', 'To Do', nil, 'In Progress'],
+    ready_to_test: ['Verified on DEV', 'Fixed, need Build/Deploy', 'Ready to Test'],
+    finished: ['Done'],
+  }.freeze
+
+  LABELS = %w[backend web mobile bug android ios enhancement devops documentation].freeze
+
   class << self
-    def sync_remote_issues
-      issues = Github::Fetcher.new.fetch
+    def sync_remote_issues(total_pages: 1, per_page: 100)
+      issues = Github::Fetcher.new.fetch(total_pages: total_pages, per_page: per_page)
       issues.each do |issue_number, issue_data|
         puts "Processing issue ##{issue_number} ..."
 
@@ -28,7 +36,11 @@ class GithubIssue < ApplicationRecord
     end
 
     def milestones
-      pluck(:milestone).uniq
+      pluck(:milestone).uniq.compact.sort.reverse
+    end
+
+    def assignees
+      pluck(:assignees).uniq.join(', ').split(', ').uniq
     end
   end
 

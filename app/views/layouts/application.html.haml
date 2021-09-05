@@ -29,16 +29,7 @@
         = render 'shared/left_sidebar'
         .content-inner
           .container-fluid
-            .row
-              .col-xl-12
-                / Default
-                .widget.has-shadow
-                  #sorting-table_wrapper.dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
-                    = yield
-                / End Default
-            / End Row
-          / End Container
-      / End Page Content
+            = yield
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'core'
     = javascript_pack_tag 'app'

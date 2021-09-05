@@ -1,48 +1,87 @@
-.row.flex-row
+.row
   .col-xl-12
-    .widget.widget-07
-      .widget-header.bordered.d-flex.align-items-center
-        %h2 Github Issues
-        .widget-options
-          .btn-group{:role => "group"}
-            = link_to 'Add Github Issue', new_github_issue_path, class: 'btn btn-success ripple'
-      .widget-body.bordered
-        .table-responsive.bordered
-          %table.table.mb-0
-            %thead
-              %tr
-                %th Number
-                %th Track
-                %th Name
-                %th Status
-                %th Assignees
-                %th Label
-                %th Milestone
-                %th Actions
-            %tbody
-              - @github_issues.each do |github_issue|
-                %tr
-                  %td
-                    = link_to github_issue.number, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
-                  %td
-                    %span.text-primary= display_boolean(github_issue.track, 'Tracked', 'Untracked').html_safe
-                  %td
-                    = link_to github_issue.name, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
-                  %td
-                    %span.text-primary= github_issue.project_column
-                  %td
-                    %span.text-primary= github_issue.assignees
-                  %td
-                    %span.text-primary= github_issue.label
-                  %td
-                    %span.text-primary= github_issue.milestone || 'BACKLOG'
-                  %td.td-actions
-                    %a{:href => github_issue_path(github_issue)}
-                      %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
-                    %a{:href => edit_github_issue_path(github_issue)}
-                      %i.la.la-edit.edit{"data-content" => "Edit", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
-                    %a{"data-confirm" => "Are you sure?", "data-method" => "delete", :href => github_issue_path(github_issue), :rel => "nofollow"}
-                      %i.la.ion-trash-a.destroy{"data-content" => "Delete", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
-        %br/
-        .dataTables_paginate
-          = paginate @github_issues, theme: 'twitter-bootstrap-4'
+    .widget.has-shadow
+      .dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
+        .row.flex-row
+          .col-xl-12
+            .widget.widget-07.mb-0
+              .widget-header.bordered.d-flex.align-items-center
+                %h2 Actions
+              .widget-body.bordered
+                = render 'search_form'
+                %hr
+                .form-group
+                  -# danger
+                  -# secondary
+                  -# primary
+                  -# success
+                  -# info
+                  -# warning
+                  = link_to 'All', github_issues_path, class: 'btn btn-outline-secondary mr-1', data: { turbolinks: false }
+                  = link_to 'Default filters', github_issues_path(default: true), class: 'btn btn-outline-primary mr-1', data: { turbolinks: false }
+                  = link_to 'Mark ALL Verified', mark_all_verified_github_issues_path, class: 'btn btn-outline-warning mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                  = link_to 'Sync Tracked Issues to Trello cards', fetch_github_issues_github_issues_path, class: 'btn btn-outline-info mr-1', method: :post, data: { confirm: 'Are you sure?' }
+
+.row
+  .col-xl-12
+    .widget.has-shadow
+      .dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
+        .row.flex-row
+          .col-xl-12
+            .widget.widget-07
+              .widget-header.bordered.d-flex.align-items-center
+                %h2 Github Issues
+                .widget-options
+                  .btn-group{:role => "group"}
+                    = link_to 'Fetch Github Issues 1', fetch_github_issues_github_issues_path(total_pages: 1), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '2', fetch_github_issues_github_issues_path(total_pages: 2), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '3', fetch_github_issues_github_issues_path(total_pages: 3), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '4', fetch_github_issues_github_issues_path(total_pages: 4), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '5', fetch_github_issues_github_issues_path(total_pages: 5), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '6 pages', fetch_github_issues_github_issues_path(total_pages: 6), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+              .widget-body.bordered
+                .table-responsive.bordered
+                  %table.table.mb-0
+                    %thead
+                      %tr
+                        %th Number
+                        %th Name
+                        %th Status
+                        %th Project Status
+                        %th Assignees
+                        %th Label
+                        %th Milestone
+                        %th Track?
+                        %th Verified?
+                        %th Actions
+                    %tbody
+                      - @github_issues.each do |github_issue|
+                        %tr
+                          %td
+                            = link_to github_issue.number, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
+                          %td
+                            = link_to github_issue.name, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
+                          %td
+                            %span.text-primary= github_issue.status
+                          %td
+                            %span.text-primary= github_issue.project_column
+                          %td
+                            %span.text-primary= github_issue.assignees
+                          %td
+                            %span.text-primary= github_issue.label
+                          %td
+                            %span.text-primary= github_issue.milestone || 'BACKLOG'
+                          %td
+                            %span.text-primary= link_to display_boolean(github_issue.track).html_safe, toggle_track_github_issue_path(github_issue), method: :post, remote: true
+                          %td
+                            %span.text-primary= link_to display_boolean(github_issue.verified).html_safe, toggle_verified_github_issue_path(github_issue), method: :post, remote: true
+                          %td.td-actions
+                            -# %a{:href => github_issue_path(github_issue)}
+                            -#   %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                            %a{:href => edit_github_issue_path(github_issue)}
+                              %i.la.la-edit.edit{"data-content" => "Edit", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                            %a{"data-confirm" => "Are you sure?", "data-method" => "delete", :href => github_issue_path(github_issue), :rel => "nofollow"}
+                              %i.la.ion-trash-a.destroy{"data-content" => "Delete", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                %br/
+                .dataTables_paginate
+                  = paginate @github_issues, theme: 'twitter-bootstrap-4'

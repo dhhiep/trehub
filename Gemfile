@@ -57,6 +57,9 @@ gem 'haml', '~> 5.2'
 # Ruby toolkit for the GitHub API
 gem 'octokit', '~> 4.21'
 
+# Object-based searching.
+gem 'ransack', '~> 2.4'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]

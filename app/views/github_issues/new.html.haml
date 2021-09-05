@@ -1,4 +1,8 @@
-= render 'form', github_issue: @github_issue
-.btn-new
-  %a.btn.btn-primary.mr-1.mb-2{:href => github_issues_path}
-    %span.fd-btn Back
+.row
+  .col-xl-12
+    .widget.has-shadow
+      .dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
+        = render 'form', github_issue: @github_issue
+        .btn-new
+          %a.btn.btn-primary.mr-1.mb-2{:href => github_issues_path}
+            %span.fd-btn Back
