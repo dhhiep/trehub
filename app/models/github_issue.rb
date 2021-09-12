@@ -5,6 +5,8 @@ class GithubIssue < ApplicationRecord
 
   before_create :update_track_flag
 
+  BACKLOG_DATE = Time.new(2000)
+
   PROJECT_STATUSES = {
     in_progress: ['Fixed, need Build/Deploy', 'To Do', nil, 'In Progress'],
     ready_to_test: ['Verified on DEV', 'Fixed, need Build/Deploy', 'Ready to Test'],
@@ -26,7 +28,7 @@ class GithubIssue < ApplicationRecord
           status: issue_data[:status],
           assignees: issue_data[:assignees].map { |assignee| assignee[:name] }.join(', '),
           label: issue_data[:labels].map { |label| label[:name] }.join(', '),
-          milestone: issue_data[:milestone],
+          milestone: issue_data[:milestone] || BACKLOG_DATE,
           project_column: issue_data[:project_column],
           project_name: issue_data[:project_name],
         }
@@ -42,6 +44,14 @@ class GithubIssue < ApplicationRecord
     def assignees
       pluck(:assignees).uniq.join(', ').split(', ').uniq
     end
+  end
+
+  def trello_name
+    "#{name} ##{number}"
+  end
+
+  def display_milestone
+    milestone == GithubIssue::BACKLOG_DATE ? 'BACKLOG' : milestone&.strftime('%F')
   end
 
   def should_track?

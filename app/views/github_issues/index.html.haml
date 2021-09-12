@@ -30,15 +30,12 @@
           .col-xl-12
             .widget.widget-07
               .widget-header.bordered.d-flex.align-items-center
-                %h2 Github Issues
+                %h2= "Github Issues (#{@github_issues.size}/#{@github_issues.total_count})"
                 .widget-options
                   .btn-group{:role => "group"}
                     = link_to 'Fetch Github Issues 1', fetch_github_issues_github_issues_path(total_pages: 1), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
                     = link_to '2', fetch_github_issues_github_issues_path(total_pages: 2), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
-                    = link_to '3', fetch_github_issues_github_issues_path(total_pages: 3), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
-                    = link_to '4', fetch_github_issues_github_issues_path(total_pages: 4), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
-                    = link_to '5', fetch_github_issues_github_issues_path(total_pages: 5), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
-                    = link_to '6 pages', fetch_github_issues_github_issues_path(total_pages: 6), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to '3 pages', fetch_github_issues_github_issues_path(total_pages: 3), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
               .widget-body.bordered
                 .table-responsive.bordered
                   %table.table.mb-0
@@ -58,19 +55,19 @@
                       - @github_issues.each do |github_issue|
                         %tr
                           %td
-                            = link_to github_issue.number, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
+                            = link_to "##{github_issue.number}", "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                           %td
-                            = link_to github_issue.name, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
+                            = link_to "#{github_issue.trello_name}", "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                           %td
                             %span.text-primary= github_issue.status
                           %td
-                            %span.text-primary= github_issue.project_column
+                            %span= display_project_status(github_issue.project_column).html_safe
                           %td
                             %span.text-primary= github_issue.assignees
                           %td
                             %span.text-primary= github_issue.label
                           %td
-                            %span.text-primary= github_issue.milestone || 'BACKLOG'
+                            %span.text-primary= github_issue.display_milestone
                           %td
                             %span.text-primary= link_to display_boolean(github_issue.track).html_safe, toggle_track_github_issue_path(github_issue), method: :post, remote: true
                           %td

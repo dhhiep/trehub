@@ -6,7 +6,7 @@ class GithubIssuesController < BaseController
 
   def index
     @q = GithubIssue.ransack(ransack_query)
-    @github_issues = @q.result.order(number: :desc).page(params[:page])
+    @github_issues = @q.result.order(number: :desc).page(params[:page]).per(100)
   end
 
   def show; end

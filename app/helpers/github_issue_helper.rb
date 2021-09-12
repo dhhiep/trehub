@@ -3,6 +3,8 @@
 module GithubIssueHelper
   def github_issue_milestones_options
     GithubIssue.milestones.map do |milestone|
+      next ['BACKLOG', milestone.to_i] if milestone == GithubIssue::BACKLOG_DATE
+
       [milestone, milestone.to_i]
     end
   end
@@ -24,4 +26,30 @@ module GithubIssueHelper
       [label.to_s.gsub('_', ' ').titleize, label]
     end
   end
+
+  def display_project_status(status)
+    html_class =
+      case status
+      when 'To Do'
+        :secondary
+      when 'In Progress'
+        :success
+      when 'Fixed, need Build/Deploy'
+        :info
+      when 'Ready to Test'
+        :warning
+      when 'Verified on DEV'
+        :danger
+      when 'Done'
+        :danger
+      else
+        status = 'Unknown'
+        :primary
+      end
+
+    <<-HTML
+      <span class="btn btn-sm btn-#{html_class}">#{status}</span>
+    HTML
+  end
 end
+
