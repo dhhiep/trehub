@@ -25,7 +25,7 @@ module Github
       #   project_columns(page: 2, per_page: 50)
       def project_columns(options = {})
         @project_columns ||=
-          projects(per_page: 100).map do |project|
+          projects(per_page: 100).concurrent_map do |project|
             columns = client.project_columns(project[:id], options)
 
             columns_formatter(project, columns)
@@ -42,7 +42,7 @@ module Github
       #   project_cards(page: 2, per_page: 50)
       def project_cards(options = {})
         @project_cards ||=
-          project_columns(per_page: 100).map do |column|
+          project_columns(per_page: 100).concurrent_map do |column|
             cards = client.column_cards(column[:id], options)
 
             cards_formatter(column, cards)
