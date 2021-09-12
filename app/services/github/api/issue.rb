@@ -29,17 +29,22 @@ module Github
       private
 
       def formatter(data)
-        data.reduce({}) do |accumulator, issue|
-          issue_data = {
-            number: issue[:number],
-            name: issue[:title],
-            status: issue[:state],
-            assignees: assignees(issue),
-            labels: labels(issue),
-            milestone: issue.to_h.dig(:milestone, :due_on),
-          }
+        issues =
+          data.concurrent_map do |issue|
+            {
+              number: issue[:number],
+              name: issue[:title],
+              status: issue[:state],
+              assignees: assignees(issue),
+              labels: labels(issue),
+              pull_requests: pull_requests(issue),
+              milestone: issue.to_h.dig(:milestone, :due_on),
+              created_by: issue.to_h.dig(:user, :login),
+            }
+          end
 
-          accumulator.merge(issue[:number] => issue_data)
+        issues.reduce({}) do |accumulator, issue|
+          accumulator.merge(issue[:number] => issue)
         end
       end
 
@@ -59,6 +64,10 @@ module Github
             color: label[:color],
           }
         end
+      end
+
+      def pull_requests(issue)
+        Github::Api::IssueTimeline.issue_timeline(issue[:number])
       end
     end
   end

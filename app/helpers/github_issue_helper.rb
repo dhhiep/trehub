@@ -51,5 +51,21 @@ module GithubIssueHelper
       <span class="btn btn-sm btn-#{html_class}">#{status}</span>
     HTML
   end
-end
 
+  def display_pull_requests(github_issue)
+    pr_text = "#{github_issue.pr_opening}/#{github_issue.pr_closed}"
+
+    color_tag =
+      if github_issue.pr_opening.to_i.positive?
+        :success
+      elsif github_issue.pr_closed.to_i.positive?
+        :primary
+      else
+        :secondary
+      end
+
+    <<-HTML
+      <span class="btn btn-sm btn-#{color_tag}">#{pr_text}</span>
+    HTML
+  end
+end
