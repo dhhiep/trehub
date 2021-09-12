@@ -60,6 +60,9 @@ gem 'octokit', '~> 4.21'
 # Object-based searching.
 gem 'ransack', '~> 2.4'
 
+# Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
+gem 'concurrent-ruby', '~> 1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]

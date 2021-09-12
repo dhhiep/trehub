@@ -42,5 +42,7 @@ module ServiceBase
     config.generators.system_tests = nil
 
     config.autoload_paths << config.root.join('lib')
+
+    Dir[Rails.root.join('lib', 'overrides', '**', '*.rb')].sort.each { |f| require f }
   end
 end

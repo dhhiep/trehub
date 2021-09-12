@@ -338,6 +338,7 @@ DEPENDENCIES
   bootsnap (~> 1.5)
   brakeman (~> 4.10)
   byebug (~> 11.1)
+  concurrent-ruby (~> 1.1)
   database_cleaner-active_record (~> 1.8)
   devise (~> 4.8)
   dotenv-rails (~> 2.7)
