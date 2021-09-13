@@ -1,29 +1,35 @@
 # frozen_string_literal: true
 
 class Array
-  def concurrent_map(&block)
+  def concurrent_map(max_threads: 100, &block)
+    throttle = Concurrent::Throttle.new(max_threads)
+
     futures =
       map do |element|
-        Concurrent::Promises.future(element, &block)
+        throttle.future(element, &block)
       end
 
     futures.compact.map(&:value!)
   end
 
-  def concurrent_hash_map(&block)
-    futures =
-      map.with_index do |element, index|
-        raise 'WrongDataType' unless element.is_a?(Hash)
+  def concurrent_map_hash(max_threads: 100, &block)
+    attach_sort_index_key!
 
-        element[:sort_index] = index
-
-        Concurrent::Promises.future(element, &block)
-      end
-
-    futures.compact.map(&:value!).sort_by_index
+    concurrent_map(max_threads: max_threads, &block).sort_by_index
   end
 
   def sort_by_index
-    sort_by { |element| element[:sort_index] }
+    sort_by { |element| element.is_a?(Hash) ? element[:sort_index] : 1 }
+  end
+
+  private
+
+  def attach_sort_index_key!
+    map.with_index do |element, index|
+      raise 'WrongDataType' unless element.is_a?(Hash)
+
+      element[:sort_index] = index
+      element
+    end
   end
 end

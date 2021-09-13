@@ -37,12 +37,24 @@ RSpec.describe Array do # rubocop:disable Metrics/BlockLength
         expect(@data_processed.count).to eq @data.count
       end
 
-      # https://github.com/ruby-concurrency/concurrent-ruby/blob/master/docs-source/promises.in.md#throttling-concurrency
-      it 'apply Throttling concurrency'
+      it 'apply throttling concurrency' do
+        total_concurrent_map_3_threads_time =
+          Benchmark.realtime do
+            (1..6).to_a.concurrent_map(max_threads: 3) { sleep(0.5) }
+          end
+
+        total_concurrent_map_6_threads_time =
+          Benchmark.realtime do
+            (1..6).to_a.concurrent_map(max_threads: 6) { sleep(1) }
+          end
+
+        expect(total_concurrent_map_3_threads_time.round).to eq 1
+        expect(total_concurrent_map_6_threads_time.round).to eq 1
+      end
     end
   end
 
-  describe '#concurrent_hash_map' do # rubocop:disable Metrics/BlockLength
+  describe '#concurrent_map_hash' do # rubocop:disable Metrics/BlockLength
     before do
       @data = [
         { id: 1, name: 'Element 1' },
@@ -57,14 +69,14 @@ RSpec.describe Array do # rubocop:disable Metrics/BlockLength
         { id: 10, name: 'Element 10' },
       ]
 
-      @data_processed = @data.concurrent_hash_map { |e| e.merge(value: e[:id] * 2) }
+      @data_processed = @data.concurrent_map_hash { |e| e.merge(value: e[:id] * 2) }
     end
 
     context 'OK when' do
       it 'process concurrent' do
-        total_concurrent_hash_map_time =
+        total_concurrent_map_hash_time =
           Benchmark.realtime do
-            @data.concurrent_hash_map do |e|
+            @data.concurrent_map_hash do |e|
               sleep(0.1)
 
               e.merge(value: e[:id] * 2)
@@ -80,7 +92,7 @@ RSpec.describe Array do # rubocop:disable Metrics/BlockLength
             end
           end
 
-         expect(total_concurrent_hash_map_time).to be < total_ruby_map_time # rubocop:disable Layout/IndentationConsistency
+         expect(total_concurrent_map_hash_time).to be < total_ruby_map_time # rubocop:disable Layout/IndentationConsistency
       end
 
       it 'result does not miss elements' do
@@ -93,13 +105,31 @@ RSpec.describe Array do # rubocop:disable Metrics/BlockLength
         end
       end
 
-      # https://github.com/ruby-concurrency/concurrent-ruby/blob/master/docs-source/promises.in.md#throttling-concurrency
-      it 'apply Throttling concurrency'
+      it 'apply throttling concurrency' do
+        total_concurrent_map_5_threads_time =
+          Benchmark.realtime do
+            @data.concurrent_map_hash(max_threads: 5) do |element|
+              sleep(0.5)
+              element
+            end
+          end
+
+        total_concurrent_map_10_threads_time =
+          Benchmark.realtime do
+            @data.concurrent_map_hash(max_threads: 10) do |element|
+              sleep(0.5)
+              element
+            end
+          end
+
+        expect(total_concurrent_map_5_threads_time.round).to eq 1
+        expect(total_concurrent_map_10_threads_time.round).to eq 1
+      end
     end
 
     context 'FAIL when' do
       it 'wrong data type' do
-        expect { [[1], [2], [3]].concurrent_hash_map }.to raise_error(RuntimeError, 'WrongDataType')
+        expect { [[1], [2], [3]].concurrent_map_hash }.to raise_error(RuntimeError, 'WrongDataType')
       end
     end
   end

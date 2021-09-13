@@ -49,10 +49,10 @@
                         %th Created by
                         %th Label
                         %th Milestone
-                        %th PR Open/Closed
+                        %th PRs
                         %th Track?
                         %th Verified?
-                        %th Actions
+                        %th.hide Actions
                     %tbody
                       - @github_issues.each do |github_issue|
                         %tr
@@ -78,7 +78,7 @@
                             %span.text-primary= link_to display_boolean(github_issue.track).html_safe, toggle_track_github_issue_path(github_issue), method: :post, remote: true
                           %td
                             %span.text-primary= link_to display_boolean(github_issue.verified).html_safe, toggle_verified_github_issue_path(github_issue), method: :post, remote: true
-                          %td.td-actions
+                          %td.td-actions.hide
                             -# %a{:href => github_issue_path(github_issue)}
                             -#   %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
                             %a{:href => edit_github_issue_path(github_issue)}

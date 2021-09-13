@@ -61,7 +61,7 @@ gem 'octokit', '~> 4.21'
 gem 'ransack', '~> 2.4'
 
 # Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
-gem 'concurrent-ruby', '~> 1.1'
+gem 'concurrent-ruby-edge', require: 'concurrent-edge'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
