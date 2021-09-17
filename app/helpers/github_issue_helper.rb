@@ -38,6 +38,8 @@ module GithubIssueHelper
         :info
       when 'Ready to Test'
         :warning
+      when 'Test Failed'
+        :danger
       when 'Verified on DEV'
         :danger
       when 'Done'
@@ -50,6 +52,10 @@ module GithubIssueHelper
     <<-HTML
       <span class="btn btn-sm btn-#{html_class}">#{status}</span>
     HTML
+  end
+
+  def display_assignees(assignees)
+    assignees.split(', ').map { |name| nick_name(name) }.join(', ')
   end
 
   def display_pull_requests(github_issue)
@@ -67,5 +73,25 @@ module GithubIssueHelper
     <<-HTML
       <span class="btn btn-sm btn-#{color_tag}">#{pr_text}</span>
     HTML
+  end
+
+  def nick_name(name)
+    nick_names[name].presence || name
+  end
+
+  def nick_names
+    @nick_names ||= {
+      "chaule1986" => 'a Châu',
+      "Mylii" => 'Linh',
+      "quocthanh18tn" => 'Thanh',
+      "hiep2fooder" => 'Hiep',
+      "khangvu88" => 'a Khang',
+      "longtrieu" => 'a Long',
+      "GiaTran2501" => 'Gia',
+      "trmaingn" => 'Mai',
+      "chinhhoangfooder" => 'Chính',
+      "khoa-nguyen-fooder-io" => 'a Khoa',
+      "long2fooder" => 'a Long',
+    }
   end
 end

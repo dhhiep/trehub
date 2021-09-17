@@ -8,7 +8,7 @@ class GithubIssue < ApplicationRecord
   BACKLOG_DATE = Time.new(2000)
 
   PROJECT_STATUSES = {
-    in_progress: ['Fixed, need Build/Deploy', 'To Do', nil, 'In Progress'],
+    in_progress: ['Fixed, need Build/Deploy', 'To Do', nil, 'In Progress', 'Test Failed'],
     ready_to_test: ['Verified on DEV', 'Fixed, need Build/Deploy', 'Ready to Test'],
     finished: ['Done'],
   }.freeze

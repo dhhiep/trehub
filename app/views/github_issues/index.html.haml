@@ -65,9 +65,9 @@
                           %td
                             %span= display_project_status(github_issue.project_column).html_safe
                           %td
-                            %span.text-primary= github_issue.assignees
+                            %span.text-primary= display_assignees(github_issue.assignees)
                           %td
-                            %span.text-primary= github_issue.created_by
+                            %span.text-primary= nick_name(github_issue.created_by)
                           %td
                             %span.text-primary= github_issue.label
                           %td
