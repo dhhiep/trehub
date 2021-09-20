@@ -12,7 +12,7 @@ module Github
       # @example
       #   projects(page: 2, per_page: 50)
       def projects(options = {})
-        @projects ||= client.projects(repo, options)
+        @projects ||= client.projects(repo_issues, options)
 
         projects_formatter(@projects)
       end

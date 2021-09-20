@@ -21,7 +21,7 @@ module Github
       # @example List issues
       #   issues(page: 2, per_page: 50)
       def issues(options = {})
-        @issues ||= client.issues(repo, options)
+        @issues ||= client.issues(repo_issues, options)
 
         formatter(@issues)
       end

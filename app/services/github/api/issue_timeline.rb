@@ -12,7 +12,7 @@ module Github
       def issue_timeline(number, options = {})
         options[:per_page] ||= 100
 
-        issue_timeline = client.issue_timeline(repo, number, options)
+        issue_timeline = client.issue_timeline(repo_issues, number, options)
 
         formatter(issue_timeline)
       end

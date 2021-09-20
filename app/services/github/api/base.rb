@@ -17,8 +17,8 @@ module Github
         ENV.fetch('GITHUB_ACCESS_TOKEN')
       end
 
-      def repo
-        ENV.fetch('GITHUB_REPO')
+      def repo_issues
+        ENV.fetch('GITHUB_REPO_ISSUES')
       end
     end
   end
