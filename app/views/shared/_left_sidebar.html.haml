@@ -1,12 +1,18 @@
 .default-sidebar
-  / Begin Side Navbar
   %nav.side-navbar.box-scroll.sidebar-scroll
-    / Begin Main Navigation
     %ul.list-unstyled
       %li
         %a{:href => github_issues_path(default: true)}
+          %i.la.la-git-square
+          %span
+            Github Issues
+            - if GithubIssue.pr_opening_counter.positive?
+              = "(#{GithubIssue.pr_opening_counter})"
+
+      %li
+        %a{:href => github_repositories_path(default: true)}
           %i.la.la-github-square
-          %span Github Issues
-    / End Main Navigation
-  / End Side Navbar
-/ End Left Sidebar
+          %span
+            Github Repositories
+            - if GithubRepository.pr_opening_counter.positive?
+              = "(#{GithubRepository.pr_opening_counter})"

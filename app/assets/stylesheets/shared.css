@@ -36,10 +36,6 @@ div.dataTables_paginate ul.pagination {
   justify-content: flex-end;
 }
 
-.table td {
-  padding: .35rem;
-}
-
 .fd-btn {
   color: aliceblue;
 }

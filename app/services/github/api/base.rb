@@ -20,6 +20,10 @@ module Github
       def repo_issues
         ENV.fetch('GITHUB_REPO_ISSUES')
       end
+
+      def repo_org
+        ENV.fetch('GITHUB_ORG')
+      end
     end
   end
 end

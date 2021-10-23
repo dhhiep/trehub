@@ -1,0 +1,57 @@
+.row
+  .col-xl-12
+    .widget.has-shadow
+      .dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
+        .row.flex-row
+          .col-xl-12
+            .widget.widget-07.mb-0
+              .widget-header.bordered.d-flex.align-items-center
+                %h2 Actions
+              .widget-body.bordered
+                = render 'search_form'
+                %hr
+                .form-group
+                  -# danger
+                  -# secondary
+                  -# primary
+                  -# success
+                  -# info
+                  -# warning
+                  = link_to 'All', github_repositories_path, class: 'btn btn-outline-secondary mr-1', data: { turbolinks: false }
+                  = link_to 'Default filters', github_repositories_path(default: true), class: 'btn btn-outline-primary mr-1', data: { turbolinks: false }
+                  = link_to 'Mark ALL Verified', mark_all_verified_github_repositories_path, class: 'btn btn-outline-warning mr-1', method: :post, data: { confirm: 'Are you sure?' }
+.row
+  .col-xl-12
+    .widget.has-shadow
+      .dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer
+        .row.flex-row
+          .col-xl-12
+            .widget.widget-07
+              .widget-header.bordered.d-flex.align-items-center
+                %h2 Github Repositories
+                .widget-options
+                  .btn-group{:role => "group"}
+                    = link_to 'Fetch', fetch_github_repositories_github_repositories_path, class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+              .widget-body.bordered
+                .table-responsive.bordered
+                  %table.table.mb-0
+                    %thead
+                      %tr
+                        %th{width: '80px'} Verified?
+                        %th{width: '80px'} Track?
+                        %th Name
+                        %th PRs
+                    %tbody
+                      - @github_repositories.each do |repository|
+                        %tr
+                          %td
+                            %span.text-primary= link_to display_boolean(repository.verified).html_safe, toggle_verified_github_repository_path(repository), method: :post, remote: true
+                          %td
+                            %span.text-primary= link_to display_boolean(repository.track).html_safe, toggle_track_github_repository_path(repository), method: :post, remote: true
+                          %td
+                            = link_to repository.name, "#{repository.url}/pulls", class: "text-primary", target: '_blank'
+                          %td
+                            = link_to repository.pr_opening, "#{repository.url}/pulls", class: "text-primary", target: '_blank'
+                %br/
+                .dataTables_paginate
+                  = paginate @github_repositories, theme: 'twitter-bootstrap-4'

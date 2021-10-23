@@ -1,0 +1,14 @@
+= search_form_for @q do |form|
+  .form-group.row.d-flex.align-items-center
+    .col-sm-3
+      = form.text_field :name_cont, placeholder: 'Name', class: 'form-control'
+    .col-sm-3
+      = form.select :track_true, [['Track', true], ['Un-track', false]], { include_blank: 'All (By Track)'}, { class: 'custom-select form-control' }
+    .col-sm-3
+      = form.select :verified_true, [['Verified', true], ['Pending', false]], { include_blank: 'All (By Verifed)'}, { class: 'custom-select form-control' }
+    .col-sm-3
+      .styled-checkbox
+        = form.check_box :pr_opening_gt, { id: :pr_opening_gt }, 0, nil
+        %label{:for => "pr_opening_gt"} PR Need Review
+  .actions
+    = form.submit 'Search', class: 'btn btn-primary'

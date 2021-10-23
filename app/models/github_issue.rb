@@ -15,7 +15,13 @@ class GithubIssue < ApplicationRecord
 
   LABELS = %w[backend web mobile bug android ios enhancement devops documentation].freeze
 
+  scope :active, -> { where(project_column: (PROJECT_STATUSES[:in_progress] + PROJECT_STATUSES[:ready_to_test]).compact) }
+
   class << self
+    def pr_opening_counter
+      where(track: true).sum(:pr_opening)
+    end
+
     def sync_remote_issues(total_pages: 1, per_page: 100)
       issues = Github::Fetcher.new.fetch(total_pages: total_pages, per_page: per_page)
       issues.each do |issue_number, issue_data|

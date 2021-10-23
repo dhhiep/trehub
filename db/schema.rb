@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_154346) do
+ActiveRecord::Schema.define(version: 2021_09_20_021917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(version: 2021_09_12_154346) do
     t.integer "pr_closed", default: 0
     t.string "created_by"
     t.index ["number"], name: "index_github_issues_on_number", unique: true
+  end
+
+  create_table "github_repositories", force: :cascade do |t|
+    t.string "repo_id"
+    t.string "name"
+    t.string "url"
+    t.integer "pr_opening", default: 0
+    t.boolean "track", default: false
+    t.boolean "verified", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

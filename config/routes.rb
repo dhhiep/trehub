@@ -10,17 +10,22 @@ Rails.application.routes.draw do
     end
 
     collection do
-      post :mark_all_verified
       post :fetch_github_issues
       post :mark_all_verified
     end
   end
 
-  root to: 'github_issues#index'
+  resources :github_repositories do
+    member do
+      post :toggle_track
+      post :toggle_verified
+    end
 
-  namespace :api, defaults: { format: 'json' } do
-    namespace :v1 do
-      resources :github_issues, only: %i[index show]
+    collection do
+      post :fetch_github_repositories
+      post :mark_all_verified
     end
   end
+
+  root to: 'github_issues#index'
 end
