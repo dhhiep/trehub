@@ -11,13 +11,24 @@ module Github
           accumulator.merge(project_issues(page: page, per_page: per_page))
         end
 
-      cards =
-        (1..total_pages).to_a.reduce({}) do |accumulator, page|
-          accumulator.merge(project_cards(page: page, per_page: per_page))
+      tracked_issue_numbers = GithubIssue.active.where.not(number: issues.keys).pluck(:number)
+      tracked_issue_numbers.concurrent_map do |issue_number|
+        issue_data = Github::Api::Issue.new.issue(issue_number) rescue nil
+        next if issue_data.blank?
+
+        issues.merge!(issue_data[:number] => issue_data)
+      end
+
+      all_cards =
+        (1..1000).to_a.reduce({}) do |accumulator, page|
+          result = project_cards(page: page, per_page: per_page)
+          break accumulator if result.blank?
+
+          accumulator.merge(result)
         end
 
       issues.each do |issue_number, issue_data|
-        card_data = cards[issue_number] || {}
+        card_data = all_cards[issue_number] || {}
 
         issues[issue_number] = issue_data.merge(card_data)
       end

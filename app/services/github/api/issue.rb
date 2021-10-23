@@ -26,26 +26,40 @@ module Github
         formatter(@issues)
       end
 
+      # Get a single issue from a repository
+      #
+      # @param repo [Integer, String, Repository, Hash] A GitHub repository
+      # @param number [Integer] Number ID of the issue
+      # @return [Sawyer::Resource] The issue you requested, if it exists
+      # @see https://developer.github.com/v3/issues/#get-a-single-issue
+      # @example Get issue #25 from octokit/octokit.rb
+      #   Octokit.issue("octokit/octokit.rb", "25")
+      def issue(number, options = {})
+        issue_data = client.issue(repo_issues, number, options)
+
+        issue_formatter(issue_data)
+      end
+
       private
 
       def formatter(data)
-        issues =
-          data.concurrent_map do |issue|
-            {
-              number: issue[:number],
-              name: issue[:title],
-              status: issue[:state],
-              assignees: assignees(issue),
-              labels: labels(issue),
-              pull_requests: pull_requests(issue),
-              milestone: issue.to_h.dig(:milestone, :due_on),
-              created_by: issue.to_h.dig(:user, :login),
-            }
-          end
-
-        issues.reduce({}) do |accumulator, issue|
-          accumulator.merge(issue[:number] => issue)
+        issues = data.concurrent_map { |issue_data| issue_formatter(issue_data) }
+        issues.reduce({}) do |accumulator, issue_data|
+          accumulator.merge(issue_data[:number] => issue_data)
         end
+      end
+
+      def issue_formatter(issue_data)
+        {
+          number: issue_data[:number],
+          name: issue_data[:title],
+          status: issue_data[:state],
+          assignees: assignees(issue_data),
+          labels: labels(issue_data),
+          pull_requests: pull_requests(issue_data),
+          milestone: issue_data.to_h.dig(:milestone, :due_on),
+          created_by: issue_data.to_h.dig(:user, :login),
+        }
       end
 
       def assignees(issue)
