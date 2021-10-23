@@ -1,5 +1,30 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: github_issues
+#
+#  id             :bigint           not null, primary key
+#  assignees      :string
+#  created_by     :string
+#  label          :string
+#  milestone      :datetime
+#  name           :string
+#  number         :integer
+#  pr_closed      :integer          default(0)
+#  pr_opening     :integer          default(0)
+#  project_column :string
+#  project_name   :string
+#  status         :string
+#  track          :boolean          default(FALSE)
+#  verified       :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+# Indexes
+#
+#  index_github_issues_on_number  (number) UNIQUE
+#
 class GithubIssue < ApplicationRecord
   validates :number, uniqueness: true
 

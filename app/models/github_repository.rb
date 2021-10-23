@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: github_repositories
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  pr_opening :integer          default(0)
+#  track      :boolean          default(FALSE)
+#  url        :string
+#  verified   :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  repo_id    :string
+#
 class GithubRepository < ApplicationRecord
   class << self
     def pr_opening_counter

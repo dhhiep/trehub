@@ -101,6 +101,12 @@ group :development do
   gem 'brakeman', '~> 4.10'
   # This Rake task investigates the application's routes definition
   gem 'traceroute', '~> 0.8'
+
+  # Generate Entity-Relationship Diagrams for Rails applications
+  gem 'rails-erd'
+
+  # Annotate Rails classes with schema and routes info
+  gem 'annotate'
 end
 
 group :test do
