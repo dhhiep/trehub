@@ -38,7 +38,7 @@ class GithubIssue < ApplicationRecord
     finished: ['Done'],
   }.freeze
 
-  LABELS = %w[backend web mobile bug android ios enhancement devops documentation].freeze
+  LABELS = %w[backend web kitchen mobile bug android ios enhancement devops documentation].freeze
 
   scope :active, -> { where(project_column: (PROJECT_STATUSES[:in_progress] + PROJECT_STATUSES[:ready_to_test]).compact) }
 
