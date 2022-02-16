@@ -88,9 +88,6 @@ group :development, :test do
 end
 
 group :development do
-  # scheduler for Ruby (at, in, cron and every jobs)
-  gem 'rufus-scheduler', '~> 3.8'
-
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code
   gem 'web-console', '~> 4.1'
   # The Listen gem listens to file modifications and notifies you about the changes
