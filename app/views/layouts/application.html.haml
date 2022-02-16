@@ -16,11 +16,10 @@
     / Favicon
     = favicon_link_tag asset_path('favicon-32x32.png')
     = favicon_link_tag asset_path('favicon-16x16.png')
+
     / Stylesheet
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag 'bootstrap.min'
-    = stylesheet_link_tag 'elisyam-1.5'
-    = stylesheet_link_tag 'shared'
+    = stylesheet_pack_tag 'app'
   %body#page-top
     .page
       = render 'shared/header'
@@ -31,5 +30,4 @@
           .container-fluid
             = yield
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'core'
     = javascript_pack_tag 'app'
