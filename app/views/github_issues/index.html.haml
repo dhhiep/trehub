@@ -34,6 +34,8 @@
                   .btn-group{:role => "group"}
                     = link_to 'Fetch Github Issues', fetch_github_issues_github_issues_path(total_pages: 1), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
               .widget-body.bordered
+                .text-right.mb-4
+                  = "Latest updated at: #{Configuration.github_issue_updated_at}"
                 .table-responsive.bordered
                   %table.table.mb-0
                     %thead

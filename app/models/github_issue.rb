@@ -69,6 +69,8 @@ class GithubIssue < ApplicationRecord
 
         record.update(data)
       end
+
+      Configuration.github_issue_updated_at = Time.current
     end
 
     def milestones
