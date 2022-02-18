@@ -6,9 +6,9 @@ namespace :heroku do
   desc 'Pings PING_URL to keep a dyno alive'
   # bundle exec rake heroku:dyno_ping
   task :dyno_ping do
-    return if ENV['PING_URL'].blank?
-    return unless working_day?
-    return unless working_times?
+    abort if ENV['PING_URL'].blank?
+    abort unless working_day?
+    abort unless working_times?
 
     uri = URI(ENV['PING_URL'])
     Net::HTTP.get_response(uri)
