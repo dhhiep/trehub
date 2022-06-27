@@ -34,18 +34,22 @@ module GithubIssueHelper
         :secondary
       when 'In Progress'
         :success
+      when 'Test Failed'
+        :danger
       when 'Fixed, need Build/Deploy'
         :info
       when 'Ready to Test'
         :warning
-      when 'Test Failed'
-        :danger
+      when 'Testing'
+        :warning
       when 'Verified on DEV'
-        :danger
+        :success
+      when 'Deployed to LIVE'
+        :success
       when 'Done'
-        :danger
+        :primary
       else
-        status = 'Unknown'
+        status = "#{status} (Unknown)"
         :primary
       end
 
