@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GithubIssuesController < BaseController
-  before_action :find_github_issue, only: %i[show edit update destroy toggle_track toggle_verified]
+  before_action :find_github_issue, only: %i[show edit update destroy toggle_track toggle_verified toggle_favourite]
   before_action :default_ransack_filter, only: %i[index]
 
   def index
@@ -55,6 +55,12 @@ class GithubIssuesController < BaseController
     redirect_back(fallback_location: github_issues_path)
   end
 
+  def toggle_favourite
+    @github_issue.update(favourite: !@github_issue.favourite)
+
+    redirect_back(fallback_location: github_issues_path)
+  end
+
   def mark_all_verified
     GithubIssue.update_all(verified: true)
 
@@ -86,6 +92,7 @@ class GithubIssuesController < BaseController
     params[:q][:project_column_in] = :in_progress if params[:q][:project_column_in].nil?
     params[:q][:label_cont_any] = %i[web backend] if params[:q][:label_cont_any].nil?
     params[:q][:milestone_eq] = GithubIssue.milestones.first.to_i if params[:q][:milestone_eq].nil?
+    params[:q][:favourite_eq] = true if params[:focused] == 'true'
   end
 
   def ransack_query

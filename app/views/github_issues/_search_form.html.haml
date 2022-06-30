@@ -1,9 +1,9 @@
 = search_form_for @q do |form|
   .form-group.row.d-flex.align-items-center
     .col-sm-3
-      = form.text_field :number_eq, placeholder: 'Number', class: 'form-control'
-    .col-sm-3
-      = form.text_field :name_cont, placeholder: 'Name', class: 'form-control'
+      .styled-checkbox
+        = form.check_box :favourite_eq, { id: :favourite_gt }, true, false
+        %label{:for => "favourite_gt"} Focused
     .col-sm-3
       .styled-checkbox
         = form.check_box :pr_opening_gt, { id: :pr_opening_gt }, 0, nil
@@ -12,6 +12,11 @@
       .styled-checkbox
         = form.check_box :pr_closed_gt, { id: :pr_closed_gt }, 0, nil
         %label{:for => "pr_closed_gt"} PR Merged
+  .form-group.row.d-flex.align-items-center
+    .col-sm-3
+      = form.text_field :number_eq, placeholder: 'Number', class: 'form-control'
+    .col-sm-3
+      = form.text_field :name_cont, placeholder: 'Name', class: 'form-control'
   .form-group.row.d-flex.align-items-center
     .col-sm-3
       = form.select :status_eq, [['Open', 'open'], ['Closed', 'closed']], { include_blank: 'All (By Status)'}, { class: 'custom-select form-control' }

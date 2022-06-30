@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :github_issues do
     member do
       post :toggle_track
+      post :toggle_favourite
       post :toggle_verified
     end
 

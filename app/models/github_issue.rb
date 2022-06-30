@@ -7,6 +7,7 @@
 #  id             :bigint           not null, primary key
 #  assignees      :string
 #  created_by     :string
+#  favourite      :boolean          default(FALSE)
 #  label          :string
 #  milestone      :datetime
 #  name           :string

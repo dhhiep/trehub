@@ -18,7 +18,8 @@
                   -# info
                   -# warning
                   = link_to 'All', github_issues_path, class: 'btn btn-outline-secondary mr-1', data: { turbolinks: false }
-                  = link_to 'Default filters', github_issues_path(default: true), class: 'btn btn-outline-primary mr-1', data: { turbolinks: false }
+                  = link_to 'Current release (focused)', github_issues_path(default: true, focused: true), class: 'btn btn-outline-success mr-1', data: { turbolinks: false }
+                  = link_to 'Current release', github_issues_path(default: true), class: 'btn btn-outline-primary mr-1', data: { turbolinks: false }
                   = link_to 'Mark ALL Verified', mark_all_verified_github_issues_path, class: 'btn btn-outline-warning mr-1', method: :post, data: { confirm: 'Are you sure?' }
 
 .row
@@ -40,6 +41,7 @@
                   %table.table.mb-0
                     %thead
                       %tr
+                        %th
                         %th Number
                         %th Name
                         %th Status
@@ -55,6 +57,13 @@
                     %tbody
                       - @github_issues.each do |github_issue|
                         %tr
+                          %td
+                            %span.text-primary
+                              = link_to toggle_favourite_github_issue_path(github_issue), method: :post, remote: true do
+                                - if github_issue.favourite
+                                  %i.fa.fa-star
+                                - else
+                                  %i.fa.fa-star-o
                           %td
                             = link_to "##{github_issue.number}", "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                           %td
