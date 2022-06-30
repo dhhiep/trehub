@@ -79,7 +79,7 @@
                           %td
                             %span.text-primary= github_issue.display_milestone
                           %td
-                            %span.text-primary= link_to display_pull_requests(github_issue).html_safe, "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
+                            %span.text-primary= link_to display_pull_requests(github_issue).html_safe, github_issue.pr_url.presence || "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                           %td
                             %span.text-primary= link_to display_boolean(github_issue.track).html_safe, toggle_track_github_issue_path(github_issue), method: :post, remote: true
                           %td

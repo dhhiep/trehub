@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2022_06_30_134723) do
     t.integer "pr_opening", default: 0
     t.integer "pr_closed", default: 0
     t.string "created_by"
+    t.string "pr_url"
     t.boolean "favourite", default: false
     t.index ["number"], name: "index_github_issues_on_number", unique: true
   end

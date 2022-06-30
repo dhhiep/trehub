@@ -14,6 +14,7 @@
 #  number         :integer
 #  pr_closed      :integer          default(0)
 #  pr_opening     :integer          default(0)
+#  pr_url         :string
 #  project_column :string
 #  project_name   :string
 #  status         :string
@@ -63,6 +64,7 @@ class GithubIssue < ApplicationRecord
           milestone: issue_data[:milestone] || BACKLOG_DATE,
           project_column: issue_data[:project_column],
           project_name: issue_data[:project_name],
+          pr_url: issue_data.dig(:pull_requests, :pull_request_url),
           pr_opening: issue_data.dig(:pull_requests, :total_open_pull_requests).to_i,
           pr_closed: issue_data.dig(:pull_requests, :total_merged_pull_requests).to_i,
           created_by: issue_data[:created_by],
