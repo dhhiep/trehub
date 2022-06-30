@@ -45,7 +45,7 @@ module GithubIssueHelper
       when 'Verified on DEV'
         :success
       when 'Deployed to LIVE'
-        :success
+        :secondary
       when 'Done'
         :primary
       else
@@ -59,7 +59,7 @@ module GithubIssueHelper
   end
 
   def display_assignees(assignees)
-    assignees.split(', ').map { |name| nick_name(name) }.join(', ')
+    assignees.split(', ').map { |name| nick_name(name) }.join("\n")
   end
 
   def display_pull_requests(github_issue)
@@ -87,8 +87,10 @@ module GithubIssueHelper
     @nick_names ||= {
       "chaule1986" => 'a Châu',
       "Mylii" => 'Linh',
-      "quocthanh18tn" => 'Thanh',
+      "thanh2fooder" => 'Thanh',
+      "thudong2x" => 'Thu',
       "hiep2fooder" => 'Hiep',
+      "yenle89" => 'c Yến',
       "khangvu88" => 'a Khang',
       "longtrieu" => 'a Long',
       "GiaTran2501" => 'Gia',
