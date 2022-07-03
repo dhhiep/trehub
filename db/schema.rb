@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2022_06_30_134723) do
     t.string "created_by"
     t.string "pr_url"
     t.boolean "favourite", default: false
+    t.string "due_date"
     t.index ["number"], name: "index_github_issues_on_number", unique: true
   end
 

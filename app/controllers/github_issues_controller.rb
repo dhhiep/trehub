@@ -88,9 +88,9 @@ class GithubIssuesController < BaseController
     return if params[:default] != 'true'
 
     params[:q] ||= {}
+    params[:q].merge!(label_cont_any: default_labels(params))
     params[:q][:status_eq] = :open if params[:q][:status_eq].nil?
     params[:q][:project_column_in] = :in_progress if params[:q][:project_column_in].nil?
-    params[:q][:label_cont_any] = %i[web backend] if params[:q][:label_cont_any].nil?
     params[:q][:milestone_eq] = GithubIssue.milestones.first.to_i if params[:q][:milestone_eq].nil?
     params[:q][:favourite_eq] = true if params[:focused] == 'true'
   end
@@ -115,5 +115,13 @@ class GithubIssuesController < BaseController
     query[:label_cont_all] = label_all.select(&:present?) if label_all.present?
 
     query
+  end
+
+  def default_labels(params)
+    return %i[backend] if params[:backend] == 'true'
+    return %i[web] if params[:web] == 'true'
+    return %i[web backend] if params[:q][:label_cont_any].nil?
+
+    params[:q][:label_cont_any]
   end
 end

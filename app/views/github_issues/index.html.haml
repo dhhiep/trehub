@@ -18,9 +18,13 @@
                   -# info
                   -# warning
                   = link_to 'All', github_issues_path, class: 'btn btn-outline-secondary mr-1', data: { turbolinks: false }
-                  = link_to 'Current release (focused)', github_issues_path(default: true, focused: true), class: 'btn btn-outline-success mr-1', data: { turbolinks: false }
                   = link_to 'Current release', github_issues_path(default: true), class: 'btn btn-outline-primary mr-1', data: { turbolinks: false }
                   = link_to 'Mark ALL Verified', mark_all_verified_github_issues_path, class: 'btn btn-outline-warning mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                %hr
+                .form-group
+                  = link_to 'Current release', github_issues_path(default: true, focused: true), class: 'btn btn-outline-success mr-1', data: { turbolinks: false }
+                  = link_to 'Current release (Backend)', github_issues_path(default: true, focused: true, backend: true), class: 'btn btn-outline-danger mr-1', data: { turbolinks: false }
+                  = link_to 'Current release (Frontend)', github_issues_path(default: true, focused: true, web: true), class: 'btn btn-outline-info mr-1', data: { turbolinks: false }
 
 .row
   .col-xl-12
@@ -78,6 +82,7 @@
                             %span.text-primary= github_issue.label
                           %td
                             %span.text-primary= github_issue.display_milestone
+                            .estimate= "(#{github_issue.due_date})" if github_issue.due_date.present?
                           %td
                             %span.text-primary= link_to display_pull_requests(github_issue).html_safe, github_issue.pr_url.presence || "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
                           %td

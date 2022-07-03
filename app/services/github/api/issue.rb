@@ -56,6 +56,7 @@ module Github
           status: issue_data[:state],
           assignees: assignees(issue_data),
           labels: labels(issue_data),
+          due_date: due_date(issue_data),
           pull_requests: pull_requests(issue_data),
           milestone: issue_data.to_h.dig(:milestone, :due_on),
           created_by: issue_data.to_h.dig(:user, :login),
@@ -82,6 +83,18 @@ module Github
 
       def pull_requests(issue)
         Github::Api::IssueTimeline.issue_timeline(issue[:number])
+      end
+
+      # Returns estimate date as text from issue body
+      # Ex:
+      #   1. Estimate 05-07-2022 => 05-07-2022
+      #   2. Estimate 05.07.2022 => 05.07.2022
+      #   2. Estimate 05/07/2022 => 05/07/2022
+      def due_date(issue_data)
+        estimate_date_matcher = issue_data[:body].to_s.match(/estimate\D*(\d+(\/|\.|-)\d+(\/|\.|-)\d+)/i)
+        return if estimate_date_matcher.blank?
+
+        estimate_date_matcher[1]
       end
     end
   end

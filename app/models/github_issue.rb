@@ -7,6 +7,7 @@
 #  id             :bigint           not null, primary key
 #  assignees      :string
 #  created_by     :string
+#  due_date       :string
 #  favourite      :boolean          default(FALSE)
 #  label          :string
 #  milestone      :datetime
@@ -62,6 +63,7 @@ class GithubIssue < ApplicationRecord
           assignees: issue_data[:assignees].map { |assignee| assignee[:name] }.join(', '),
           label: issue_data[:labels].map { |label| label[:name] }.join(', '),
           milestone: issue_data[:milestone] || BACKLOG_DATE,
+          due_date: issue_data[:due_date],
           project_column: issue_data[:project_column],
           project_name: issue_data[:project_name],
           pr_url: issue_data.dig(:pull_requests, :pull_request_url),
