@@ -25,7 +25,6 @@
                   = link_to 'Current release', github_issues_path(default: true, focused: true), class: 'btn btn-outline-success mr-1', data: { turbolinks: false }
                   = link_to 'Current release (Backend)', github_issues_path(default: true, focused: true, backend: true), class: 'btn btn-outline-danger mr-1', data: { turbolinks: false }
                   = link_to 'Current release (Frontend)', github_issues_path(default: true, focused: true, web: true), class: 'btn btn-outline-info mr-1', data: { turbolinks: false }
-
 .row
   .col-xl-12
     .widget.has-shadow
@@ -39,8 +38,13 @@
                   .btn-group{:role => "group"}
                     = link_to 'Fetch Github Issues', fetch_github_issues_github_issues_path(total_pages: 1), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
               .widget-body.bordered
-                .text-right.mb-4
+                .text-left.mb-4
+                  = "Rate Limit: #{@github_rate_limit.remaining}/#{@github_rate_limit.limit}"
+                .text-left.mb-4
+                  = "Reset At: #{@github_rate_limit.resets_at.getlocal('+07:00')}"
+                .text-left.mb-4
                   = "Latest updated at: #{Configuration.github_issue_updated_at}"
+                %hr
                 .table-responsive.bordered
                   %table.table.mb-0
                     %thead

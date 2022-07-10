@@ -6,6 +6,7 @@ class GithubIssuesController < BaseController
 
   def index
     @q = GithubIssue.ransack(ransack_query)
+    @github_rate_limit = Github::Api::Base.new.client.rate_limit
     @github_issues = @q.result.order(number: :desc).page(params[:page]).per(100)
   end
 

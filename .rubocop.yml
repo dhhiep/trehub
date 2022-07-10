@@ -9,8 +9,8 @@
 #
 # See https://docs.rubocop.org/rubocop/configuration
 # https://docs.rubocop.org/rubocop/cops_metrics.html
-# https://github.com/rubocop-hq/rubocop/blob/v1.5.0/config/default.yml
-# https://github.com/rubocop-hq/rubocop/blob/v1.5.0/.rubocop.yml
+# https://github.com/rubocop-hq/rubocop/blob/v1.8.1/config/default.yml
+# https://github.com/rubocop-hq/rubocop/blob/v1.8.1/.rubocop.yml
 #
 # Usage
 # bundle exec rubocop --parallel --format html --out rubocop.html
@@ -23,18 +23,37 @@
 
 AllCops:
   NewCops: enable
-  Exclude:
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
-    - 'spec/fixtures/**/*'
-    - 'tmp/**/*'
-    - '.git/**/*'
-    - 'bin/*'
+  DisplayCopNames: true
   TargetRubyVersion: 2.7
+  Include:
+    - "**/Gemfile"
+    - "**/Rakefile"
+    - "**/Appraisals"
+    - "**/*.rb"
+  Exclude:
+    - "lib/generators/**/*"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "spec/dummy/**/*"
+    - "spec/fixtures/**/*"
+    - "tmp/**/*"
+    - ".git/**/*"
+    - "bin/*"
+    - "db/schema.rb"
+    - "db/migrate/*.rb"
+    - "config/routes.rb"
 
 Layout/LineLength:
   Description: 'Checks that line length does not exceed the configured limit.'
   Max: 120
+
+Metrics/BlockLength:
+  Description: 'Avoid long blocks with many lines.'
+  Enabled: false
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 10 lines of code.'
+  Enabled: false
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
@@ -78,7 +97,11 @@ Style/RescueStandardError:
 
 Style/ParallelAssignment:
   Description: >-
-                  Check for simple usages of parallel assignment.
-                  It will only warn when the number of variables
-                  matches on both sides of the assignment.
+    Check for simple usages of parallel assignment.
+    It will only warn when the number of variables
+    matches on both sides of the assignment.
+  Enabled: false
+
+Lint/MissingSuper:
+  Description: 'This cop checks for the presence of constructors and lifecycle callbacks without calls to `super`.'
   Enabled: false

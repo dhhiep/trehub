@@ -26,9 +26,8 @@
       = render 'shared/header'
       / Begin Page Content
       .page-content.d-flex.align-items-stretch
-        = render 'shared/left_sidebar'
-        .content-inner
-          .container-fluid
-            = yield
+        =# render 'shared/left_sidebar'
+        .container-fluid
+          = yield
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'app'
