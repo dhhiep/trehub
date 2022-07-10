@@ -51,7 +51,7 @@ module Github
       per_page = options[:per_page].presence || 100
       puts "Fetching project issues page: #{page} - per page: #{per_page}"
 
-      Github::Api::Issue.new.issues(page: page, per_page: per_page, state: :all)
+      Github::Api::Issue.new.issues(page: page, per_page: per_page, state: :open)
     end
   end
 end
