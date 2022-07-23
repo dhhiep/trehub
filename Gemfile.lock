@@ -167,7 +167,6 @@ GEM
     msgpack (1.4.2)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    newrelic_rpm (8.4.0)
     nio4r (2.5.7)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
@@ -368,7 +367,6 @@ DEPENDENCIES
   jsonapi-serializer (~> 2.2)
   kaminari (~> 0.17)
   listen (~> 3.3)
-  newrelic_rpm
   octokit (~> 4.21)
   pg (~> 1.2)
   pry-byebug (~> 3.9)

@@ -63,9 +63,6 @@ gem 'ransack', '~> 2.4'
 # Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more.
 gem 'concurrent-ruby-edge', require: 'concurrent-edge'
 
-# The New Relic Ruby agent monitors your applications to help you identify and solve performance issues.
-gem 'newrelic_rpm'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
