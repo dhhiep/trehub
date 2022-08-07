@@ -1,0 +1,3 @@
+:plain
+  var row_data = $("#{escape_javascript(render(partial: 'issue_row', locals: { github_issue: @github_issue } ))}")
+  $('##{"issue_#{@github_issue.number}"}').html($(row_data).html());

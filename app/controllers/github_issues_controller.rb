@@ -47,19 +47,19 @@ class GithubIssuesController < BaseController
   def toggle_track
     @github_issue.update(track: !@github_issue.track)
 
-    redirect_back(fallback_location: github_issues_path)
+    render :issue_row_updater_js
   end
 
   def toggle_verified
     @github_issue.update(verified: !@github_issue.verified)
 
-    redirect_back(fallback_location: github_issues_path)
+    render :issue_row_updater_js
   end
 
   def toggle_favourite
     @github_issue.update(favourite: !@github_issue.favourite)
 
-    redirect_back(fallback_location: github_issues_path)
+    render :issue_row_updater_js
   end
 
   def mark_all_verified

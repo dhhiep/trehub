@@ -63,43 +63,7 @@
                         %th.hide Actions
                     %tbody
                       - @github_issues.each do |github_issue|
-                        %tr
-                          %td
-                            %span.text-primary
-                              = link_to toggle_favourite_github_issue_path(github_issue), method: :post, remote: true do
-                                - if github_issue.favourite
-                                  %i.fa.fa-star
-                                - else
-                                  %i.fa.fa-star-o
-                          %td
-                            = link_to "##{github_issue.number}", "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
-                          %td
-                            = link_to "#{github_issue.trello_name}", "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
-                          %td
-                            %span.text-primary= github_issue.status
-                          %td
-                            %span= display_project_status(github_issue.project_column).html_safe
-                          %td
-                            %span.text-primary= display_assignees(github_issue.assignees)
-                            .created_by= "(by #{nick_name(github_issue.created_by)})"
-                          %td
-                            %span.text-primary= github_issue.label
-                          %td
-                            %span.text-primary= github_issue.display_milestone
-                            .estimate= "(#{github_issue.due_date})" if github_issue.due_date.present?
-                          %td
-                            %span.text-primary= link_to display_pull_requests(github_issue).html_safe, github_issue.pr_url.presence || "https://github.com/Fooder-io/Tasks/issues/#{github_issue.number}", class: "text-primary", target: '_blank'
-                          %td
-                            %span.text-primary= link_to display_boolean(github_issue.track).html_safe, toggle_track_github_issue_path(github_issue), method: :post, remote: true
-                          %td
-                            %span.text-primary= link_to display_boolean(github_issue.verified).html_safe, toggle_verified_github_issue_path(github_issue), method: :post, remote: true
-                          %td.td-actions.hide
-                            -# %a{:href => github_issue_path(github_issue)}
-                            -#   %i.la.ion-eye.show{"data-content" => "Show", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
-                            %a{:href => edit_github_issue_path(github_issue)}
-                              %i.la.la-edit.edit{"data-content" => "Edit", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
-                            %a{"data-confirm" => "Are you sure?", "data-method" => "delete", :href => github_issue_path(github_issue), :rel => "nofollow"}
-                              %i.la.ion-trash-a.destroy{"data-content" => "Delete", "data-placement" => "top", "data-toggle" => "popover", "data-trigger" => "hover"}
+                        = render 'issue_row', github_issue: github_issue
                 %br/
                 .dataTables_paginate
                   = paginate @github_issues, theme: 'twitter-bootstrap-4'

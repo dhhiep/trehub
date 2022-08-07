@@ -21,6 +21,8 @@
     / Stylesheet
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'app'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'app'
   %body#page-top
     .page
       = render 'shared/header'
@@ -29,5 +31,3 @@
         =# render 'shared/left_sidebar'
         .container-fluid
           = yield
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'app'
