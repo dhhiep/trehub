@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     collection do
       post :fetch_github_issues
+      post :fetch_project_cards
       post :mark_all_verified
     end
   end

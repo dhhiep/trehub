@@ -3,6 +3,12 @@
 module Github
   module Api
     class Project < Base
+      class << self
+        def project_cards(options = {})
+          new.project_cards(options)
+        end
+      end
+
       # List projects for a repository
       #
       # Requires authenticated client
@@ -12,6 +18,7 @@ module Github
       # @example
       #   projects(page: 2, per_page: 50)
       def projects(options = {})
+        options[:accept] = Octokit::Preview::PREVIEW_TYPES[:projects]
         @projects ||= client.projects(repo_issues, options)
 
         projects_formatter(@projects)
@@ -25,7 +32,7 @@ module Github
       #   project_columns(page: 2, per_page: 50)
       def project_columns(options = {})
         @project_columns ||=
-          projects(per_page: 100).concurrent_map do |project|
+          projects.concurrent_map do |project|
             columns = client.project_columns(project[:id], options)
 
             columns_formatter(project, columns)
@@ -42,7 +49,7 @@ module Github
       #   project_cards(page: 2, per_page: 50)
       def project_cards(options = {})
         @project_cards ||=
-          project_columns(per_page: 100).concurrent_map do |column|
+          project_columns.concurrent_map do |column|
             cards = client.column_cards(column[:id], options)
 
             cards_formatter(column, cards)

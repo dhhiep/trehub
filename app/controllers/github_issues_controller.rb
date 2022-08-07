@@ -69,8 +69,13 @@ class GithubIssuesController < BaseController
   end
 
   def fetch_github_issues
-    total_pages = params[:total_pages].to_i.positive? ? params[:total_pages].to_i : 1
-    GithubIssue.sync_remote_issues(total_pages: total_pages)
+    Github::Issues::Fetcher.call
+
+    redirect_back(fallback_location: github_issues_path)
+  end
+
+  def fetch_project_cards
+    Github::Projects::Fetcher.call
 
     redirect_back(fallback_location: github_issues_path)
   end
@@ -91,7 +96,7 @@ class GithubIssuesController < BaseController
     params[:q] ||= {}
     params[:q].merge!(label_cont_any: default_labels(params))
     params[:q][:status_eq] = :open if params[:q][:status_eq].nil?
-    params[:q][:project_column_in] = :in_progress if params[:q][:project_column_in].nil?
+    params[:q][:card_column_in] = :in_progress if params[:q][:card_column_in].nil?
     params[:q][:milestone_eq] = GithubIssue.milestones.first.to_i if params[:q][:milestone_eq].nil?
     params[:q][:favourite_eq] = true if params[:focused] == 'true'
   end
@@ -103,8 +108,8 @@ class GithubIssuesController < BaseController
     milestone = query[:milestone_eq]
     query[:milestone_eq] = Time.at(milestone.to_i) if milestone.present?
 
-    project_column = query[:project_column_in]
-    query[:project_column_in] = GithubIssue::PROJECT_STATUSES[project_column.to_sym] if project_column.present?
+    card_column = query[:card_column_in]
+    query[:card_column_in] = GithubIssue::PROJECT_STATUSES[card_column.to_sym] if card_column.present?
 
     assignees = query[:assignees_cont_any]
     query[:assignees_cont_any] = assignees.select(&:present?) if assignees.present?

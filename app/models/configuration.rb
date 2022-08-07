@@ -15,7 +15,7 @@
 #  index_configurations_on_key  (key) UNIQUE
 #
 class Configuration < ApplicationRecord
-  KEYS = %i[github_issue_updated_at].freeze
+  KEYS = %i[github_issues_updated_at project_cards_updated_at].freeze
 
   validates :key, presence: true, uniqueness: true
 

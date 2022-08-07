@@ -5,6 +5,8 @@ module Github
     class Base
       def client
         @client ||= Octokit::Client.new(access_token: access_token)
+        @client.auto_paginate = true
+        @client
       end
 
       def user

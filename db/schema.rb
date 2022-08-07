@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_30_134723) do
+ActiveRecord::Schema.define(version: 2022_07_23_065235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.integer "issue_number"
+    t.string "project"
+    t.string "column"
+    t.string "status"
+    t.text "note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "configurations", force: :cascade do |t|
     t.string "key", null: false
@@ -33,8 +43,6 @@ ActiveRecord::Schema.define(version: 2022_06_30_134723) do
     t.boolean "track", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "project_column"
-    t.string "project_name"
     t.boolean "verified", default: false
     t.integer "pr_opening", default: 0
     t.integer "pr_closed", default: 0

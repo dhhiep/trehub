@@ -32,7 +32,7 @@
     .col-sm-3
       = form.select :verified_true, [['Verified', true], ['Pending', false]], { include_blank: 'All (By Verifed)'}, { class: 'custom-select form-control' }
     .col-sm-3
-      = form.select :project_column_in, github_issue_project_status_options, { include_blank: 'All (By Project Status)', selected: params.dig(:q, :project_column_in)}, { class: 'custom-select form-control' }
+      = form.select :card_column_in, github_issue_project_status_options, { include_blank: 'All (By Project Status)', selected: params.dig(:q, :card_column_in)}, { class: 'custom-select form-control' }
     .col-sm-3
       = form.select :milestone_eq, github_issue_milestones_options, { include_blank: 'All (By Milestone)', selected: params.dig(:q, :milestone_eq)}, { class: 'custom-select form-control' }
   .actions

@@ -36,15 +36,18 @@
                 %h2= "Github Issues (#{@github_issues.size}/#{@github_issues.total_count})"
                 .widget-options
                   .btn-group{:role => "group"}
-                    = link_to 'Fetch Github Issues', fetch_github_issues_github_issues_path(total_pages: 1), class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to 'Fetch Github Issues', fetch_github_issues_github_issues_path, class: 'btn btn-outline-success mr-1', method: :post, data: { confirm: 'Are you sure?' }
+                    = link_to 'Fetch Project Cards', fetch_project_cards_github_issues_path, class: 'btn btn-outline-warning mr-1', method: :post, data: { confirm: 'Are you sure?' }
               .widget-body.bordered
                 .text-left.mb-4
                   = "Rate Limit: #{@github_rate_limit.remaining}/#{@github_rate_limit.limit}"
+                  = "- Reset in #{time_ago_in_words(@github_rate_limit.resets_at, include_seconds: true)}"
                 .text-left.mb-4
-                  = "Reset At: #{@github_rate_limit.resets_at.getlocal('+07:00')}"
+                  - if Configuration.github_issues_updated_at.present?
+                    = "Github Issues - Updated on #{time_ago_in_words(Configuration.github_issues_updated_at, include_seconds: true)} ago"
                 .text-left.mb-4
-                  = "Latest updated at: #{Configuration.github_issue_updated_at}"
-                %hr
+                  - if Configuration.project_cards_updated_at.present?
+                    = "Project Cards - Updated on #{time_ago_in_words(Configuration.project_cards_updated_at, include_seconds: true)} ago"
                 .table-responsive.bordered
                   %table.table.mb-0
                     %thead
